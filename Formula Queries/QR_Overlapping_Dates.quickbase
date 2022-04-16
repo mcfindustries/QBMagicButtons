@@ -1,0 +1,33 @@
+// Source Control
+// [Alias]=[_DBID_CHILD]
+// [DBID]="XXX"
+// FID=XXX   
+var text Token ="abcdefghijklmnopqrstuv";
+// Formula Text Field
+//  Query Returned Text  for the Formula Query Overlapping_Date
+
+
+// Variables
+var text MSG = "Click Record ID #" & ToText([Record ID#]);
+
+//  URL
+var text URLChild = 
+    URLRoot() & "db/" & Dbid() & "?a=dr&rid="&[Record ID#];
+
+// Hyperlink
+var text HTMLChild = "<a href="&$URLChild &">"& "<br>" & $MSG &"</a>";
+
+// Table
+
+var text TableUI =
+  "<table style='width:100% cellspacing=15'>" &
+  "<tr>" &
+   "<th width='50%'>" & $HTMLChild & "</th>" & 
+   "<th width='25%'>" & [Start Date] & "</th>" &
+   "<th width='25%'>" & [End Date] & "</th>" &
+  "</tr>"&
+ "</table>" ;
+ 
+
+// UI
+$TableUI

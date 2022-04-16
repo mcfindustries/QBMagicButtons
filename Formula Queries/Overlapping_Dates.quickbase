@@ -1,0 +1,42 @@
+// Source Control
+// [Alias]=[_DBID_CHILD]
+// [DBID]="XXX"
+// FID=XXX   
+var text Token ="abcdefghijklmnopqrstuv";
+// Formula Query for the Record ID# of Sibling Child Records with Overlapping Dates 
+// Field is a Formula Rich Text to display in a HTML Table from the Table Title Field
+
+// Parent Table
+// No data needed from the Parent Table as we are checking for Overlap in the Child Data
+
+// Child Table
+//   [_DBID_CHILD]    [Start Date]  FID 6   [End Date]  FID 7      [Related Parent] FID 8
+//   [Query Returned Text] FID 11
+
+//  Query if the Sibling Record has the Same Parent: 
+//               The Start Date of Child is Before [End Date] of Sibling  AND
+//               End Date of the Child is After [Start Date]  of Sibling
+
+var text query ="{8.EX.'" & [Related Parent]& "''} AND {6.BF. '"& [End Date] &"''} AND {7.AF.'" & [Start Date]& "''} ";
+var number FIDQueried = 11;    //[Query Returned Text]
+
+//  Get the values of [Quert Returned Text] as a textlist
+
+var textlist  ReturnedList= GetFieldValues( GetRecords( $query), $FIDQueried ); 
+
+// Clean the text of Semicolons
+var text Returned = SearchAndReplace(ToText($ReturnedList),"> ; <" , "><" );
+
+// Table
+
+var text TableUI =
+  "<table style='width:100% cellspacing=15'>" &
+  "<tr>" & 
+   "<th width='50%'>Record ID #</th>" & 
+   "<th width='25%'>Start Date</th>" &
+   "<th width='25%'>End Date</th>" &
+   $Returned &
+ "</table>" ;
+
+// UI
+$TableUI
